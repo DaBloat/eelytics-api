@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance for Eelytics API
+After=network.target postgresql.service mosquitto.service
+[Service]
+User=dabloat
+Group=www-data
+WorkingDirectory=/home/dabloat/eelytics-api
+Environment="PATH=/home/dabloat/eelytics-api/venv/bin"
+ExecStart=/home/dabloat/eelytics-api/venv/bin/gunicorn --workers 3 --bind unix:/tmp/myapi.sock -m 007 wsgi:app
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

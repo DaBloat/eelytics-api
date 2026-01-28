@@ -1,0 +1,28 @@
+protocols: [udp, tcp]
+rtspAddress: :8554
+webrtc: yes
+# This is the most important part for ngrok
+webrtcAdditionalHosts: [ "unfauceted-irene-contextually.ngrok-free.dev" ]
+  
+# Ensure the ICE servers are set to allow the browser to find the server
+
+paths:
+  # This will be the stream path, e.g., rtsp://<ip>:8554/cam
+  cam:
+    # Use the dedicated Raspberry Pi camera source
+    source: rpiCamera
+    sourceProtocol: tcp   # Forces the path to use TCP
+    
+    # Optional: Uncomment and change these to match your camera/needs
+    rpiCameraWidth: 2028
+    rpiCameraHeight: 1520
+    rpiCameraFPS: 30
+    rpiCameraHFlip: true
+    rpiCameraVFlip: true
+    
+    rpiCameraBitrate: 8000000
+    rpiCameraAWB: 'auto'
+    rpiCameraExposure: 'short'
+
+  processed:
+    sourceProtocol: tcp   # Forces the path to use TCP
