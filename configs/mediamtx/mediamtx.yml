@@ -1,10 +1,11 @@
 protocols: [udp, tcp]
 rtspAddress: :8554
 webrtc: yes
-# This is the most important part for ngrok
+webrtcAddress: :8889
 webrtcAdditionalHosts: [ "unfauceted-irene-contextually.ngrok-free.dev" ]
-  
-# Ensure the ICE servers are set to allow the browser to find the server
+
+webrtcIceServers2:
+  - url: stun:stun.l.google.com:19302
 
 paths:
   # This will be the stream path, e.g., rtsp://<ip>:8554/cam
@@ -14,13 +15,13 @@ paths:
     sourceProtocol: tcp   # Forces the path to use TCP
     
     # Optional: Uncomment and change these to match your camera/needs
-    rpiCameraWidth: 2028
-    rpiCameraHeight: 1520
+    rpiCameraWidth: 1024
+    rpiCameraHeight: 768
     rpiCameraFPS: 30
     rpiCameraHFlip: true
     rpiCameraVFlip: true
     
-    rpiCameraBitrate: 8000000
+    rpiCameraBitrate: 1000000
     rpiCameraAWB: 'auto'
     rpiCameraExposure: 'short'
 

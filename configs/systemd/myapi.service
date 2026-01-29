@@ -1,6 +1,6 @@
 [Unit]
 Description=Gunicorn instance for Eelytics API
-After=network.target postgresql.service mosquitto.service
+After=network.target mosquitto.service
 [Service]
 User=dabloat
 Group=www-data
