@@ -1,8 +1,11 @@
 import sqlite3
-from accounts import Account
+from .accounts import Account
 from flask import g
+import os
 
-DATABASE = 'database/accounts.db'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DATABASE = os.path.join(BASE_DIR, 'database', 'accounts.db')
     
 def get_db():
     if 'db' not in g:
@@ -57,9 +60,9 @@ def get_account_cred(username):
     db = get_db()
     cur = db.cursor()
     cur.execute("""
-                SELECT username, email, password FROM accounts WHERE username = ?
+                SELECT id, username, email, password FROM accounts WHERE username = ?
                 """, [username])
-    return dict(cur.fetchone())
+    return cur.fetchone()
 
 def update_account(id, update_dict:dict):
     db = get_db()
@@ -90,14 +93,10 @@ if __name__ == '__main__':
     app = Flask(__name__)
     
     with app.app_context():
-        pass
-        """
-        create_account_table()
         a = Account('Jason', 'Medina', 'IV', 'JMedina', 'jasonmedina.official@gmail.com', 'kunwarimaangasperoinde', 'image.jpg')
         print(a)
-        print(get_account_cred('JMedina'))
-        delete_account(1)
-        """
+        # create_account(a)
+        get_account_cred('Robert')
     
 
     
