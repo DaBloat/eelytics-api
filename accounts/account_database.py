@@ -84,16 +84,19 @@ def read_profile_account():
 
 def get_account_cred(username):
     '''
-    returns a Row object(dict) of user credentials
+    returns a Row object(dict) of user credentials, 0 if the username is nonexistent!
     
     :param username: accepts the username of the account
     '''
     db = get_db()
     cur = db.cursor()
-    cur.execute("""
-                SELECT id, username, email, password FROM accounts WHERE username = ?
-                """, [username])
-    return cur.fetchone()
+    try:
+        cur.execute("""
+                    SELECT id, username, email, password FROM accounts WHERE username = ?
+                    """, [username])
+        return dict(cur.fetchone())
+    except TypeError as e:
+        return 0
 
 def update_account(id, update_dict:dict):
     '''
