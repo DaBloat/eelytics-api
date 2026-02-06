@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify
 from accounts.accounts_api import accounts_blueprint
+from accounts.account_database import get_db
 
 app = Flask(__name__)
 

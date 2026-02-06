@@ -15,8 +15,9 @@ def get_db():
         sq3lite.Connection: The Database connection
     """
     if 'db' not in g:
-        g.db = sqlite3.connect(DATABASE)
+        g.db = sqlite3.connect(DATABASE, timeout=5)
         g.db.row_factory = sqlite3.Row
+        g.db.execute("PRAGMA journal_mode=WAL;") # WAL MODE
     return g.db
 
 def close_db(e=None):
@@ -77,7 +78,7 @@ def read_all_accounts():
     cur.execute("""
                 SELECT id, username FROM accounts
                 """)
-    return cur.fetchall()
+    return dict(cur.fetchall())
 
 def read_profile_account():
     pass

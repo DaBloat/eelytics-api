@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #1e1e1e; color: #d4d4d4; font-family: 'Consolas', monospace; margin: 0; padding: 10px; }
+        .row { border-left: 3px solid #4ec9b0; padding: 8px; margin-bottom: 8px; background: #252526; }
+        .id { color: #858585; font-size: 0.8em; }
+        .user { color: #ce9178; font-weight: bold; }
+        .email { color: #9cdcfe; }
+        .empty { color: #f44747; font-style: italic; }
+    </style>
+</head>
+<body>
+    {% for acc in accounts %}
+    <div class="row">
+        <span class="id">#{{ acc.id }}</span> | 
+        <span class="user">{{ acc.username }}</span> 
+        <span class="email">&lt;{{ acc.email }}&gt;</span>
+        <span class="email">&lt;{{ acc.password }}&gt;</span>
+    </div>
+    {% else %}
+    <div class="empty">The tank is currently empty...</div>
+    {% endfor %}
+</body>
+</html>
