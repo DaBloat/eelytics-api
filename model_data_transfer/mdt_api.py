@@ -16,6 +16,6 @@ def live_data():
 @mdt_blueprint.route('/update', methods=['POST'])
 def update_data():
     data = request.json
-    r.set('latest_eel', json.dumps(data))
+    r.set('latest_eel', json.dumps(data), ex=3)
     return jsonify({'status':'updated'}), 200
 

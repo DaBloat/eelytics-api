@@ -1,6 +1,6 @@
 [Unit]
 Description=Gunicorn instance for Eelytics API
-After=network.target mosquitto.service
+After=network.target redis.service
 
 [Service]
 User=dabloat
