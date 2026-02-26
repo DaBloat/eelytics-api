@@ -3,9 +3,7 @@ from .accounts import Account
 from flask import g
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-DATABASE = os.path.join(BASE_DIR, 'database', 'accounts.db')
+DATABASE = os.path.join('database', 'eelytics.db')
     
 def get_db():
     """Connect to the Database and set it to be accessible as a Dictionary
@@ -82,6 +80,7 @@ def read_all_accounts():
 
 def read_profile_account():
     pass
+
 
 def get_account_cred(username):
     '''
