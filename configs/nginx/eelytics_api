@@ -1,8 +1,11 @@
 server {
     listen 80;
     server_name _;
-    location /api {
-        include proxy_params;
+    location /api/ {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_pass http://unix:/tmp/myapi.sock;
     }
 
@@ -12,8 +15,6 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-
-        # Important for WebRTC handshakes
         proxy_buffering off;
         proxy_request_buffering off;
     }
@@ -24,8 +25,42 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+        proxy_request_buffering off;
+    }
+}
 
-        # Important for WebRTC handshakes
+server {
+    listen 443 ssl;
+    server_name 192.168.1.220; # Your Pi's Static IP
+
+    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+
+    location /api/ {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https; # Force HTTPS scheme
+        proxy_pass http://unix:/tmp/myapi.sock;
+    }
+
+    location /cam/ {
+        proxy_pass http://127.0.0.1:8889;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_buffering off;
+        proxy_request_buffering off;
+    }
+
+    location /processed/ {
+        proxy_pass http://127.0.0.1:8889;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
         proxy_buffering off;
         proxy_request_buffering off;
     }

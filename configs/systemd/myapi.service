@@ -7,7 +7,7 @@ User=dabloat
 Group=www-data
 WorkingDirectory=/home/dabloat/eelytics-api
 Environment="PATH=/home/dabloat/eelytics-api/venv/bin"
-ExecStart=/home/dabloat/eelytics-api/venv/bin/gunicorn --workers 3 --bind unix:/tmp/myapi.sock -m 007 wsgi:app
+ExecStart=/home/dabloat/eelytics-api/venv/bin/gunicorn --workers 3 --bind unix:/tmp/myapi.sock -m 000 wsgi:app
 Restart=always
 RestartSec=5
 

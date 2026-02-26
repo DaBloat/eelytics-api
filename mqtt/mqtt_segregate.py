@@ -39,7 +39,6 @@ while True:
             elif current_group == "ELVER":
                 client.publish(TOPIC, "45,45")
                 print("[MQTT] Sent: 45,45 (ELVER)")
-           
 
             last_state = current_group
 
