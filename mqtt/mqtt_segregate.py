@@ -7,6 +7,7 @@ r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
 
 client = mqtt.Client()
 client.connect("127.0.0.1", 1883, 60)
+client.loop_start()
 TOPIC = "eelytics/servos"
 
 last_state = "NONE"
