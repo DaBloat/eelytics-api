@@ -3,6 +3,26 @@ from .accounts import Account
 from flask import g
 import os
 
+class AccountManager:
+    def __init__(self):
+        pass
+    
+    def connection(self):
+        pass
+    
+    def disconnect(self):
+        pass
+    
+    def create_table(self):
+        pass
+    
+    def create_account(self):
+        pass
+    
+    def read_accounts(self):
+        pass
+    
+    
 DATABASE = os.path.join('database', 'eelytics.db')
     
 def get_db():
