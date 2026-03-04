@@ -5,8 +5,16 @@ import json
 
 r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
 
+def on_message(client, userdata, msg):
+    if msg.topic == "eelytics/tank/status":
+        # Save the live ESP32 data straight to Redis for your GET api
+        r.set('latest_tank_stat', msg.payload.decode())
+        print(f"[MQTT] Received Live Tank Data: {msg.payload.decode()}")
+        
 client = mqtt.Client()
+client.on_message = on_message
 client.connect("127.0.0.1", 1883, 60)
+client.subscribe('eelytics/tank/status')
 client.loop_start()
 TOPIC = "eelytics/servos"
 
