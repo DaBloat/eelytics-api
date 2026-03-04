@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from accounts.accounts_api import accounts_blueprint
-from model_data_transfer.mdt_api import mdt_blueprint
+from data_transfer.dt_api import dt_blueprint
 
 
 app = Flask(__name__)
@@ -14,6 +14,6 @@ def easter_egg():
     return render_template('yna.html')
 
 app.register_blueprint(accounts_blueprint, url_prefix='/api/accounts')
-app.register_blueprint(mdt_blueprint, url_prefix='/api/mdt')
+app.register_blueprint(dt_blueprint, url_prefix='/api/dt')
 if __name__ == '__main__':
     pass
