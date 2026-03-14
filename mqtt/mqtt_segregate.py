@@ -10,7 +10,7 @@ def on_message(client, userdata, msg):
         r.set('latest_tank_stat', msg.payload.decode())
         print(f"[MQTT] Received Live Tank Data: {msg.payload.decode()}")
         
-client = mqtt.Client()
+client = mqtt.Client('Eelytics-MQTT-LISTENER')
 client.on_message = on_message
 client.connect("127.0.0.1", 1883, 60)
 client.subscribe('eelytics/tank/status')
@@ -43,11 +43,11 @@ while True:
                 print("[MQTT] Sent: 45,0 (TABLE)")
                 
             elif current_group == "KUROKO":
-                client.publish(GATE_TOPIC, "0,0")
+                client.publish(GATE_TOPIC, "45,45")
                 print("[MQTT] Sent: 0,0 (KUROKO)")
 
             elif current_group == "ELVER":
-                client.publish(GATE_TOPIC, "45,45")
+                client.publish(GATE_TOPIC, "0,0")
                 print("[MQTT] Sent: 45,45 (ELVER)")
 
             last_state = current_group
