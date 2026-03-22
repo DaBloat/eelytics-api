@@ -1,6 +1,5 @@
 import sqlite3
 from flask import g
-import os
 
 class Account:
     def __init__(self, fn, ln, suf, usr, em, pas, pfp):
