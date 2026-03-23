@@ -8,4 +8,4 @@ eelsdb_manager = EelDBManager(os.path.join('database', 'eelytics.db'))
 @eelsdb_blueprint.route('/save_batch',  methods=['POST'])
 def save_batch():
     data = request.get_json()
-    print(data)
+    return jsonify({'batch_logs': data.get('batch_logs')}), 200
