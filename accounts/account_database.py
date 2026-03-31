@@ -50,6 +50,15 @@ class AccountManager:
         db.commit()
         return True
     
+    def drop_table(self):
+        db = self.connection
+        cur = db.cursor()
+        cur.execute("""
+                    DROP TABLE IF EXISTS accounts
+                    """)
+        db.commit()
+        return True
+    
     def create_account(self, user:Account):
         db = self.connection
         cur = db.cursor()

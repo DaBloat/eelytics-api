@@ -1,10 +1,12 @@
 import sqlite3
 from flask import g
+import datetime
 
 
 class EelData:
-    def __init__(self, date, size, group, img):
+    def __init__(self, date, time, size, group, img):
         self.date = date
+        self.time = time
         self.size = size
         self.group = group
         self.img = img
@@ -35,6 +37,7 @@ class EelDBManager:
                     eelsdb (
                         id INTEGER PRIMARY KEY,
                         date TEXT NOT NULL,
+                        time TEXT NOT NULL,
                         size REAL NOT NULL,
                         data_group TEXT NOT NULL,
                         img TEXT
@@ -43,14 +46,24 @@ class EelDBManager:
         db.commit()
         return True
     
+    def drop_table(self):
+        db = self.connection
+        cur = db.cursor()
+        cur.execute("""
+                    DROP TABLE IF EXISTS eelsdb
+                    """)
+        db.commit()
+        return True
+        
+    
     def add_data(self, eels:EelData):
         db = self.connection
         cur = db.cursor()
         try:
             cur.execute("""
-                        INSERT INTO eelsdb (date, size, data_group, img)
-                        VALUES (?, ?, ?, ?)""", 
-                        [eels.date, eels.size, eels.group, eels.img])
+                        INSERT INTO eelsdb (date, time, size, data_group, img)
+                        VALUES (?, ?, ?, ?, ?)""", 
+                        [eels.date, eels.time, eels.size, eels.group, eels.img])
             db.commit()
             return {'status': True, 'desc':'Eels Data Created'}
         except sqlite3.Error as e:
@@ -79,4 +92,8 @@ class EelDBManager:
             return {"status":True, "desc":"Eels Data Deleted"}
         except sqlite3.Error as e:
             return {"status": False, 'desc': str(e)}
-        
+
+def format_string():
+    date = datetime.datetime.now()
+    date = date.strftime("%Y-%m-%d")
+    print(date)

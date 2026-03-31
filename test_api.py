@@ -2,17 +2,20 @@ from accounts.account_database import *
 from eels.eels_database import *
 from flask import Flask
 import os
+import sqlite3
 
 app = Flask(__name__)
 
 with app.app_context():
     eel = EelDBManager(os.path.join('database', 'eelytics.db'))
-    eel.create_table()
-    pop = EelData('date', 20, 'KUROKO', 'imgay')
-    eel.add_data(pop)
-    print(eel.show_data())
-    eel.delete_data(2)
-    print(eel.show_data())
+    format_string()
+    # eel.drop_table()
+    # eel.create_table()
+    # pop = EelData('date', 'time', 20, 'KUROKO', 'imgay')
+    # eel.add_data(pop)
+    # print(eel.show_data())
+    # eel.delete_data(2)
+    # print(eel.show_data())
     # create_account_table()
     # acc = Account('Kurt Russel', 'Villamor', '', 'DaBloat', 'kurtrusselvillamor1201@gmail.com', 'Potatolifeform', 'image.png')
     #acc = Account('Kurt', 'Villamor', '', 'DaBloatffs', 'kureetpop@gmail.com', 'Potatolifeform', 'image.png')
