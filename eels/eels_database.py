@@ -1,4 +1,5 @@
 import sqlite3
+import re
 from flask import g
 import datetime
 
@@ -10,6 +11,9 @@ class EelData:
         self.size = size
         self.group = group
         self.img = img
+    
+    def show(self):
+        return f"{self.date} @ {self.time}, Found a {self.group} with {self.size} inches!"
         
 
 class EelDBManager:
@@ -93,7 +97,13 @@ class EelDBManager:
         except sqlite3.Error as e:
             return {"status": False, 'desc': str(e)}
 
-def format_string():
+def format_string(log_str):
     date = datetime.datetime.now()
     date = date.strftime("%Y-%m-%d")
-    print(date)
+    pattern = r"(?P<time>\d{2}:\d{2}:\d{2}) - Detected : (?P<inches>[\d.]+) in as (?P<group>ELVER|KUROKO|TABLE)"
+    available = re.search(pattern, log_str)
+    if available:
+        time = available.group('time')
+        inches = available.group('inches')
+        group = available.group('group')
+        return date, time, inches, group
