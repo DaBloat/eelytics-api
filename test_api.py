@@ -14,6 +14,7 @@ with app.app_context():
     # pop = EelData('date', 'time', 20, 'KUROKO', 'imgay')
     # eel.add_data(pop)
     print(eel.show_data())
+    print(eel.get_average('ELVER'))
     # eel.delete_data(2)
     # print(eel.show_data())
     # create_account_table()

@@ -96,6 +96,15 @@ class EelDBManager:
             return {"status":True, "desc":"Eels Data Deleted"}
         except sqlite3.Error as e:
             return {"status": False, 'desc': str(e)}
+        
+    def get_average(self, group):
+        db = self.connection
+        cur = db.cursor()
+        cur.execute(f"""
+                    SELECT size FROM eelsdb WHERE data_group='{group}'
+                    """)
+        row = cur.fetchall()
+        return [dict(item) for item in row]
 
 def format_string(log_str):
     date = datetime.datetime.now()
