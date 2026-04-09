@@ -85,7 +85,7 @@ class AccountManager:
         cur = db.cursor()
         try:
             cur.execute("""
-                        SELECT id, username, email, password FROM accounts WHERE username=?""",
+                        SELECT id, first_name, email, password FROM accounts WHERE username=?""",
                         [username])
             return dict(cur.fetchone())
         except TypeError:            

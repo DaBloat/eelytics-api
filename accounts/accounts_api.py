@@ -24,7 +24,7 @@ def login():
             "message": "Login successful",
             "user": {
                 "id": user_cred['id'],
-                "username": user_cred['username'],
+                "first_name": user_cred['first_name'],
                 "email": user_cred['email'],
             }}), 200
     

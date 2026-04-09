@@ -30,3 +30,23 @@ def get_avg():
         'avg_table': avg_table
     })
     
+
+@eelsdb_blueprint.route('/get_logs', methods=['GET'])
+def get_logs():
+    page = request.args.get('page', default=1, type=int)
+    limit = request.args.get('limit', default=20, type=int)
+    
+    offset = (page - 1) * limit
+    
+    logs = eelsdb_manager.show_data_page(limit, offset)
+    
+    total_count = len(eelsdb_manager.show_data())
+    has_next = (offset + limit) < total_count
+
+    return jsonify({
+        "status": "success",
+        "results": logs,
+        "page": page,
+        "has_next": has_next
+    }), 200
+    

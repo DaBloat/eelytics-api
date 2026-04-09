@@ -100,9 +100,18 @@ class EelDBManager:
     def get_average(self, group):
         db = self.connection
         cur = db.cursor()
-        cur.execute(f"""
-                    SELECT size FROM eelsdb WHERE data_group='{group}'
-                    """)
+        cur.execute("""
+                    SELECT size FROM eelsdb WHERE data_group=?""",
+                    [group])
+        row = cur.fetchall()
+        return [dict(item) for item in row]
+    
+    def show_data_page(self, limit, offset):
+        db = self.connection
+        cur = db.cursor()
+        cur.execute("""
+                    SELECT * FROM eelsdb ORDER BY id DESC LIMIT ? OFFSET ?""",
+                    [limit, offset])
         row = cur.fetchall()
         return [dict(item) for item in row]
 
